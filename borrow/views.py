@@ -26,7 +26,7 @@ def borrow_book(request, id):
             user_account.balance -= book.price
             user_account.save()
             borrow = Borrow.objects.create(borrower=user_account, book=book, balance_after_borrow=user_account.balance)
-            messages.success(request, f"{book.title} has been borrowed successfully!")
+            messages.success(request, f"{book.title} has been borrowed successfully! Email Has Been Sent!")
             send_borrow_email(user_account, borrow, "Book Borrowing Message", "borrow_email.html")
             return redirect('book_detail', pk=book.pk)
         else:
