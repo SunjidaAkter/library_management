@@ -1,0 +1,51 @@
+<div class="mx-10 mb-10 mt-5 shadow-lg">
+    <div class="navbar bg-[#fef5e6] rounded-3xl">
+        <div class="flex-1">
+            <a href="{% url 'home' %}" class="ml-5 text-[#615b51] font-extrabold text-4xl">Books</a>
+        </div>
+        <div class="flex-none">
+            {% if request.user.is_authenticated %}
+            <div class="dropdown dropdown-end">
+                <a href="{% url 'deposit' %}" class="text-[#615b51]  text-xl font-bold pr-10">Deposit</a>
+                <!-- <ul class="menu menu-horizontal px-1">
+                </ul> -->
+            </div>
+            <div class="dropdown dropdown-end">
+                <div tabindex="0" role="button"
+                    class="btn btn-outline hover:bg-transparent border-2 border-gray-300 btn-circle avatar">
+                    <div class="w-10 rounded-full">
+                        {% if gender != 'Male' %}
+                        <img alt="{{ request.user.username }}"
+                            src="https://png.pngtree.com/png-clipart/20220904/ourmid/pngtree-muslim-girl-using-hijab-png-image_6137399.png?v={{ request.user.username }}" />
+                        {% else %}
+                        <img alt="{{ request.user.username }}"
+                            src="https://png.pngtree.com/png-vector/20221203/ourmid/pngtree-cartoon-style-male-user-profile-icon-vector-illustraton-png-image_6489287.png?v={{ request.user.username }}" />
+                        {% endif %}
+                    </div>
+                </div>
+                <ul tabindex="0" class="menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-[#fef5e6] rounded-box w-52">
+                    <li>
+                        <a href="{% url 'profile' %}" class="justify-between"
+                            onclick="window.location.reload(true)">Profile</a>
+                    </li>
+                    <li>
+                        <form action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-none">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+            {% else %}
+            <ul class="flex justify-end px-5">
+                <li><a href="{% url 'register' %}"
+                        class="text-[#615b51] text-xl font-bold hover:bg-transparent focus:bg-transparent px-5">Register</a>
+                </li>
+
+                <li><a href="{% url 'login' %}" class="text-[#615b51] text-xl font-bold px-5">Login</a></li>
+            </ul>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
