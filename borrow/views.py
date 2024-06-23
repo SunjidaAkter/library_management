@@ -7,17 +7,16 @@ from django.contrib.auth.decorators import login_required
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 
+def send_borrow_email(user_account, borrow, subject, template):
+    message = render_to_string(template, {
+        'user_account': user_account,
+        'borrow': borrow,
+    })
+    send_email = EmailMultiAlternatives(subject, '', to=[user_account.user.email])
+    send_email.attach_alternative(message, "text/html")
+    send_email.send()
 
-
-def send_borrow_email(user_account,borrow, subject, template):
-        message = render_to_string(template, {
-            'user_account' : user_account,
-            'borrow' : borrow,
-        })
-        send_email = EmailMultiAlternatives(subject, '', to=[user_account.user.email])
-        send_email.attach_alternative(message, "text/html")
-        send_email.send()
-@login_required
+@login_required(login_url='/user_account/login/')
 def borrow_book(request, id):
     if request.method == 'POST':
         book = get_object_or_404(Books, pk=id)
@@ -35,7 +34,7 @@ def borrow_book(request, id):
     else:
         # Handle GET request (optional: add additional logic for viewing the borrow form)
         user_account = UserAccount.objects.get(user=request.user)
-        gender=user_account.gender
-        print(gender,"checking")
+        gender = user_account.gender
+        print(gender, "checking")
         book = get_object_or_404(Books, pk=id)
-        return render(request, 'book_detail.html', {'gender':gender,'book': book})
+        return render(request, 'book_detail.html', {'gender': gender, 'book': book})
