@@ -8,7 +8,6 @@ from django.views.generic import DetailView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
-@method_decorator(login_required, name='dispatch')
 class DetailsBookView(DetailView):
     model = models.Books
     template_name = 'book_detail.html'
